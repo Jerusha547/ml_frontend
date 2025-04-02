@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./PredictionForm.css"; // Import CSS file
 
+const API_URL = import.meta.env.VITE_API_URL; // Get API URL from Vercel
 const PredictionForm = () => {
   const [formData, setFormData] = useState({
     year_of_manufacture: "",
@@ -32,6 +33,24 @@ const PredictionForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const currentYear = new Date().getFullYear();
+  //   const updatedFormData = {
+  //     ...formData,
+  //     car_age: currentYear - formData.year_of_manufacture,
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:5000/predict",
+  //       updatedFormData
+  //     );
+  //     setPrediction(response.data.predicted_price);
+  //   } catch (error) {
+  //     console.error("Error making prediction:", error);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const currentYear = new Date().getFullYear();
@@ -41,10 +60,7 @@ const PredictionForm = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/predict",
-        updatedFormData
-      );
+      const response = await axios.post(`${API_URL}/predict`, updatedFormData);
       setPrediction(response.data.predicted_price);
     } catch (error) {
       console.error("Error making prediction:", error);
