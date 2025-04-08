@@ -6,22 +6,26 @@ const PredictionForm = () => {
   const [formData, setFormData] = useState({
     year_of_manufacture: "",
     kms_driven: "",
-    fuel_type_petrol: 0,
-    fuel_type_diesel: 0,
-    fuel_type_cng: 0,
-    fuel_type_hybrid: 0,
-    fuel_type_lpg: 0,
-    fuel_type_electric: 0,
-    city_bangalore: 0,
-    city_mumbai: 0,
-    city_delhi: 0,
-    city_chennai: 0,
-    city_pune: 0,
-    city_kolkata: 0,
-    city_hyderabad: 0,
-    city_gurgaon: 0,
-    city_noida: 0,
-    city_faridabad: 0,
+    fuel_type_Diesel: 0,
+    fuel_type_Electric: 0,
+    fuel_type_Hybrid: 0,
+    fuel_type_LPG: 0,
+    fuel_type_Petrol: 0,
+    city_Ambattur: 0,
+    city_Bangalore: 0,
+    city_Chennai: 0,
+    city_Delhi: 0,
+    city_Faridabad: 0,
+    city_Gurgaon: 0,
+    city_Hyderabad: 0,
+    city_Kolkata: 0,
+    city_Mumbai: 0,
+    city_Noida: 0,
+    city_Pallikarnai: 0,
+    city_Poonamallee: 0,
+    city_Pune: 0,
+    city_Thane: 0,
+    city_Thiruvallur: 0,
     car_age: "",
   });
   const [prediction, setPrediction] = useState(null);
@@ -33,10 +37,11 @@ const PredictionForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentYear = new Date().getFullYear();
     const updatedFormData = {
       ...formData,
-      car_age: currentYear - formData.year_of_manufacture,
+      year_of_manufacture: Number(formData.year_of_manufacture),
+      kms_driven: Number(formData.kms_driven),
+      car_age: new Date().getFullYear() - Number(formData.year_of_manufacture),
     };
 
     try {
@@ -45,6 +50,7 @@ const PredictionForm = () => {
         updatedFormData
       );
       setPrediction(response.data.predicted_price);
+      console.log("Payload being sent:", updatedFormData);
     } catch (error) {
       console.error("Error making prediction:", error);
     }
@@ -76,24 +82,25 @@ const PredictionForm = () => {
             name="fuel_type"
             onChange={(e) => {
               let fuel = {
-                fuel_type_petrol: 0,
-                fuel_type_diesel: 0,
-                fuel_type_cng: 0,
-                fuel_type_hybrid: 0,
-                fuel_type_lpg: 0,
-                fuel_type_electric: 0,
+                fuel_type_Petrol: 0,
+                fuel_type_Diesel: 0,
+                fuel_type_CNG: 0,
+                fuel_type_Hybrid: 0,
+                fuel_type_LPG: 0,
+                fuel_type_Electric: 0,
               };
               fuel[`fuel_type_${e.target.value}`] = 1;
               setFormData({ ...formData, ...fuel });
             }}
           >
             <option value="">Select Fuel Type</option>
-            <option value="petrol">Petrol</option>
-            <option value="diesel">Diesel</option>
-            <option value="cng">CNG</option>
-            <option value="hybrid">Hybrid</option>
-            <option value="lpg">LPG</option>
-            <option value="electric">Electric</option>
+
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="CNG">CNG</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="LPG">LPG</option>
+            <option value="Electric">Electric</option>
           </select>
 
           {/* City Selection */}
@@ -101,32 +108,42 @@ const PredictionForm = () => {
             name="city"
             onChange={(e) => {
               let cities = {
-                city_bangalore: 0,
-                city_mumbai: 0,
-                city_delhi: 0,
-                city_chennai: 0,
-                city_pune: 0,
-                city_kolkata: 0,
-                city_hyderabad: 0,
-                city_gurgaon: 0,
-                city_noida: 0,
-                city_faridabad: 0,
+                city_Ambattur: 0,
+                city_Chennai: 0,
+                city_Bangalore: 0,
+                city_Faridabad: 0,
+                city_Gurgaon: 0,
+                city_Hyderabad: 0,
+                city_Kolkata: 0,
+                city_Mumbai: 0,
+                city_Noida: 0,
+                city_Pallikarnai: 0,
+                city_Poonamallee: 0,
+                city_Pune: 0,
+                city_Thane: 0,
+                city_Thiruvallur: 0,
+                city_Delhi: 0,
               };
               cities[`city_${e.target.value}`] = 1;
               setFormData({ ...formData, ...cities });
             }}
           >
             <option value="">Select City</option>
-            <option value="bangalore">Bangalore</option>
-            <option value="mumbai">Mumbai</option>
-            <option value="delhi">Delhi</option>
-            <option value="chennai">Chennai</option>
-            <option value="pune">Pune</option>
-            <option value="kolkata">Kolkata</option>
-            <option value="hyderabad">Hyderabad</option>
-            <option value="gurgaon">Gurgaon</option>
-            <option value="noida">Noida</option>
-            <option value="faridabad">Faridabad</option>
+            <option value="Ambattur">Ambattur</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Faridabad">Faridabad</option>
+            <option value="Gurgaon">Gurgaon</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Noida">Noida</option>
+            <option value="Pallikarnai">Pallikarnai</option>
+            <option value="Poonamallee">Poonamallee</option>
+            <option value="Pune">Pune</option>
+            <option value="Thane">Thane</option>
+            <option value="Thiruvallur">Thiruvallur</option>
           </select>
 
           <button type="submit">Predict Price</button>
